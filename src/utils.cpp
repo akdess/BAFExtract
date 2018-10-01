@@ -4,8 +4,6 @@
 #include <string.h>
 #include <vector>
 #include "ansi_string.h"
-#include "rng.h"
-#include "seed_manager.h"
 
 #ifdef _WIN32
 	#include <Windows.h>
@@ -481,55 +479,6 @@ int get_n_non_empty_lines(char* fp)
 	fclose(f);
 
 	return(n_lines);
-}
-
-void subsample_file_lines_no_buffer(char* fp, int n_lines_to_subsample)
-{
-	fprintf(stderr, "Counting the number of lines.\n");
-	int n_lines = get_n_non_empty_lines(fp);
-	fprintf(stderr, "%d lines in the file, subsampling %d lines.\n", n_lines, n_lines_to_subsample);
-
-	//double p_select = (double)n_lines_to_subsample/n_lines;
-
-	int n_sampled_lines = 0;
-	//t_rng* rng = new t_rng(t_seed_manager::seed_me());
-
-	// Open the file.
-	FILE* f_sub = open_f("subsampled.txt", "w");
-	FILE* f = open_f(fp, "r");
-
-	// Loop to sample required number of lines.
-	while(n_sampled_lines != n_lines_to_subsample)
-	{
-		fseek(f, 0, SEEK_SET);
-
-		while(1)
-		{
-			char* cur_line = getline(f);
-			if(cur_line == NULL)
-			{
-				break;
-			}
-			
-			// Make sure that the line is not empty.
-			if(!line_empty(cur_line))
-			{
-				fprintf(f_sub, "%s\n", cur_line);
-
-				n_sampled_lines++;
-
-				if(n_sampled_lines % 10000 == 0)
-				{
-					fprintf(stderr, "Sampled %d. line.         \r", n_sampled_lines);
-				}
-			}
-
-			delete [] cur_line;
-		} // file reading loop.
-	} // sampling loop.
-
-	fclose(f);
-	fclose(f_sub);
 }
 
 bool line_empty(char* line)
