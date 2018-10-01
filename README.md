@@ -6,7 +6,7 @@ There are two steps:
 1. Generation of the pileup.
 2. Generation of the B-allele frequency profile.
 
-Please open a new "issue" on github or contact authors akdes.serin@uth.tmc.edu or arif.o.harmanci@uth.tmc.edu for questions.
+Please open a new "issue" on github or contact authors Akdes.Harmanci@uth.tmc.edu or arif.o.harmanci@uth.tmc.edu for questions.
 
 # Installation
 

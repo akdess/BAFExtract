@@ -909,7 +909,7 @@ int main(int argc, char* argv[])
 	{
 		fprintf(stderr, "USAGE: %s [Options] [Arguments]\n\
 Options:\n\
-	-generate_compressed_pileup_per_SAM [SAM file path] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n\
+	-generate_compressed_pileup_per_SAM [SAM file path (\"stdin\" for piping from samtools)] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n\
 	-get_SNVs_per_pileup [chromosome info file path] [Pileup directory] [Binary sequences directory] [Min coverage per SNV (20)] [Min MAF covg per SNV (4)] [Min MAF (0.2)] [Output file path]\n", argv[0]);
 		exit(0);
 	}
@@ -918,7 +918,7 @@ Options:\n\
 	{
 		if (argc != 7)
 		{
-			fprintf(stderr, "USAGE: %s -generate_compressed_pileup_per_SAM [SAM file path] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n", argv[0]);
+			fprintf(stderr, "USAGE: %s -generate_compressed_pileup_per_SAM [SAM file path (\"stdin\" for piping from samtools)] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n", argv[0]);
 			exit(0);
 		}
 
