@@ -8,13 +8,13 @@ exec_name = BAFExtract
 %.o: %.cpp
 	${CC} ${comp_flags} $< -o $@
 
-objs = main.o \
-utils.o \
-ansi_string.o \
-genomics_coords.o \
+objs = src/main.o \
+src/utils.o \
+src/ansi_string.o \
+src/genomics_coords.o \
 
 BAFExtract: ${objs}
-	${CC} -O3 -o ../bin/${exec_name} ${objs}
+	${CC} -O3 -o bin/${exec_name} ${objs}
 
 clean:
-	rm -f *.o ${objs} ../bin/${exec_name} 
+	rm -f *.o ${objs} bin/${exec_name} 
