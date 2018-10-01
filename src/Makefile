@@ -10,9 +10,7 @@ exec_name = BAFExtract
 
 objs = main.o \
 utils.o \
-rng.o \
 ansi_string.o \
-seed_manager.o \
 genomics_coords.o \
 
 BAFExtract: ${objs}

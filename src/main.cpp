@@ -299,27 +299,6 @@ void get_next_entry_per_mapp_map_string(char* mapping_map_str,
   i_mapp_map++;
 }
 
-void load_PE_reads(char* sorted_first_mapped_reads_fp, 
-  char* sorted_last_mapped_reads_fp, 
-  vector<t_mapped_PE_read*>* first_mate_reads, 
-  vector<t_mapped_PE_read*>* last_mate_reads, 
-  int max_n_pcr_amplified_reads)
-{
-  if(!check_file(sorted_first_mapped_reads_fp))
-  {
-    printf("Could not open mapped reads file %s @ %s(%d).\n", sorted_first_mapped_reads_fp, __FILE__, __LINE__);
-    return;
-  }
-
-  if(!check_file(sorted_last_mapped_reads_fp))
-  {
-    printf("Could not open mapped reads file %s @ %s(%d).\n", sorted_first_mapped_reads_fp, __FILE__, __LINE__);
-    return;
-  }
-
-  // Start loading the PE reads: For each read on the first mate file, find the corresponding id'd read.
-}
-
 void compress_nucleotide_pileup_track(unsigned short** pileup, int l_sig, char* op_fp)
 {
   FILE* f_op = open_f(op_fp, "wb");
@@ -926,6 +905,14 @@ void delete_pileup(unsigned short** loaded_pileup)
 }
 int main(int argc, char* argv[])
 {
+	if (argc < 3)
+	{
+		fprintf(stderr, "USAGE: %s [Options] [Arguments]\n\
+Options:\n\
+	-generate_compressed_pileup_per_SAM [SAM file path] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n\
+	-get_SNVs_per_pileup [chromosome info file path] [Pileup directory] [Binary sequences directory] [Min coverage per SNV (20)] [Min MAF covg per SNV (4)] [Min MAF (0.2)] [Output file path]\n", argv[0]);
+		exit(0);
+	}
 
 	if (t_string::compare_strings(argv[1], "-generate_compressed_pileup_per_SAM"))
 	{
@@ -952,7 +939,7 @@ int main(int argc, char* argv[])
 	{
 		if (argc != 9)
 		{
-			fprintf(stderr, "USAGE: %s get_SNVs_per_pileup [chromosome info file path] [Pileup directory] [Binary sequences directory] [Min coverage per SNV (20)] [Min MAF covg per SNV (4)] [Min MAF (0.2)] [Output file path]\n", argv[0]);
+			fprintf(stderr, "USAGE: %s -get_SNVs_per_pileup [chromosome info file path] [Pileup directory] [Binary sequences directory] [Min coverage per SNV (20)] [Min MAF covg per SNV (4)] [Min MAF (0.2)] [Output file path]\n", argv[0]);
 			exit(0);
 		}
 
