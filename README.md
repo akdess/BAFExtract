@@ -28,11 +28,11 @@ You can download and unzip genome_fasta_pileup_dir files from :
 
 [for hg19](https://www.dropbox.com/s/a3u8f2f8ufm5wdj/hg19.zip?dl=0)
 	
-You can download genome_list files from: 
+You can download genome_list files from : 
 
-[for hg38]:(https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0)
+[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0)
 	
-[for hg19]:(https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
+[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
 
 # Example
 [download example bam file](https://www.dropbox.com/s/1vl6iip0b8jwu66/SRR1295366.sorted.bam?dl=0)
