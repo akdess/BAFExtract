@@ -49,12 +49,14 @@ done
 
 You can download genome_list files from : 
 
-[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0) generated using the following command: 
+[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0) 
+generated using the following command: 
 ```
 fetchChromSizes hg38 > hg38.list
 ```
 
-[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) generated using the following command: 
+[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
+generated using the following command: 
 ```
 fetchChromSizes hg19 > hg19.list
 ```
