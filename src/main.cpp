@@ -6,7 +6,6 @@
 #include "utils.h"
 #include "mapped_read_tools.h"
 #include "genomics_coords.h"
-//#include "genome_sequence_tools.h"
 #include <algorithm>
 
 using namespace std;
