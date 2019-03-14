@@ -27,18 +27,37 @@ You can download and unzip genome_fasta_pileup_dir files from :
 [for hg38](https://www.dropbox.com/s/ysrcfcnk7z8gyit/hg38.zip?dl=0)
 
 [for hg19](https://www.dropbox.com/s/a3u8f2f8ufm5wdj/hg19.zip?dl=0)
-	
+
+Or you can create genome_fasta_pileup_dir files for other genomes using the following commands:
+
+```
+BAFExtract -preprocess_FASTA [FASTA file path] [Output directory]
+```
+
+for example: 
+```
+wget -c http://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz
+tar -xvzf chromFa.tar.gz
+mkdir ../mm10
+FILES=./*fa
+for f in $FILES
+do
+  echo "Processing $f file..."
+  BAFExtract -preprocess_FASTA $f ../mm10
+done
+```
+
 You can download genome_list files from : 
 
-[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0)
-	
-[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
-
-To create the preprocessed sequence for other genomes, you can use:
-
+[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0) generated using the following command: 
+```fetchChromSizes hg38 > hg38.list
 ```
-BAFExtract -preprocess_FASTA mm10.fa mm10
+
+[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) generated using the following command: 
+```fetchChromSizes hg19 > hg19.list
 ```
+
+
 
 # Example
 [download example bam file](https://www.dropbox.com/s/1vl6iip0b8jwu66/SRR1295366.sorted.bam?dl=0)
