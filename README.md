@@ -34,6 +34,12 @@ You can download genome_list files from :
 	
 [for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
 
+To create the preprocessed sequence for other genomes, you can use:
+
+```
+BAFExtract -preprocess_FASTA mm10.fa mm10
+```
+
 # Example
 [download example bam file](https://www.dropbox.com/s/1vl6iip0b8jwu66/SRR1295366.sorted.bam?dl=0)
 
