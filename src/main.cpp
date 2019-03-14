@@ -909,12 +909,112 @@ int main(int argc, char* argv[])
 	{
 		fprintf(stderr, "USAGE: %s [Options] [Arguments]\n\
 Options:\n\
+	-preprocess_FASTA [FASTA file path] [Output firectory]\n\
 	-generate_compressed_pileup_per_SAM [SAM file path (\"stdin\" for piping from samtools)] [Chromosome Ids/lengths file path] [Output directory] [Minimum mapping quality] [Minimum base quality]\n\
 	-get_SNVs_per_pileup [chromosome info file path] [Pileup directory] [Binary sequences directory] [Min coverage per SNV (20)] [Min MAF covg per SNV (4)] [Min MAF (0.2)] [Output file path]\n", argv[0]);
 		exit(0);
 	}
 
-	if (t_string::compare_strings(argv[1], "-generate_compressed_pileup_per_SAM"))
+	if (strcmp(argv[1], "-preprocess_FASTA") == 0)
+	{
+		if (argc != 4)
+		{
+			fprintf(stderr, "USAGE: %s -preprocess_FASTA [FASTA file path] [Output firectory]\n", argv[0]);
+			exit(0);
+		}
+
+		char* fasta_fp = argv[2];
+		char* bin_dir = argv[3];
+
+		printf("Binarizing %s.\n", fasta_fp);
+		FILE* f_fasta = open_f(fasta_fp, "r");
+
+		char* cur_line = NULL;
+		int buff_len = 2000 * 1000 * 1000;
+		char* cur_entry_buffer = new char[buff_len];
+		int cur_entry_i = 0;
+		char cur_entry_id[1000];
+
+		char chr_ids_fp[1000];
+		sprintf(chr_ids_fp, "%s/chr_ids.txt", bin_dir);
+		FILE* f_chr_ids = open_f(chr_ids_fp, "w");
+
+		while (1)
+		{
+			// Process the current buffer.
+			cur_line = getline(f_fasta);
+
+			if (cur_line == NULL)
+			{
+				// File ended, dump the last entry if there are values in it.
+				if (cur_entry_i > 1)
+				{
+					char cur_entry_bin_fp[1000];
+					normalize_chr_id(cur_entry_id);
+					sprintf(cur_entry_bin_fp, "%s/%s.bin", bin_dir, cur_entry_id);
+
+					fprintf(f_chr_ids, "%s\n", cur_entry_id);
+
+					FILE* f_bin = open_f(cur_entry_bin_fp, "wb");
+
+					// Open the new binary file.
+					fprintf(stderr, "Dumping %s (%d)\n", cur_entry_id, cur_entry_i);
+
+					// Dump the sequence buffer.
+					fwrite(&cur_entry_i, sizeof(int), 1, f_bin);
+					fwrite(cur_entry_buffer, sizeof(char), cur_entry_i, f_bin);
+
+					// Close current file.
+					fclose(f_bin);
+				}
+				break;
+			}
+			else if (cur_line[0] == '>')
+			{
+				if (cur_entry_i > 1)
+				{
+					char cur_entry_bin_fp[1000];
+					normalize_chr_id(cur_entry_id);
+					sprintf(cur_entry_bin_fp, "%s/%s.bin", bin_dir, cur_entry_id);
+
+					fprintf(f_chr_ids, "%s\n", cur_entry_id);
+
+					FILE* f_bin = open_f(cur_entry_bin_fp, "wb");
+
+					// Open the new binary file.
+					fprintf(stderr, "Dumping %s (%d)\n", cur_entry_id, cur_entry_i);
+
+					// Dump the sequence buffer.
+					fwrite(&cur_entry_i, sizeof(int), 1, f_bin);
+					fwrite(cur_entry_buffer, sizeof(char), cur_entry_i, f_bin);
+
+					// Close current file.
+					fclose(f_bin);
+				}
+
+				// Update the id, reset the counter.
+				strcpy(cur_entry_id, &(cur_line[1]));
+				cur_entry_i = 0;
+			}
+			else
+			{
+				// Concatenate the current sequence line.
+				int l_cur_line = t_string::string_length(cur_line);
+				for (int i = 0; i < l_cur_line; i++)
+				{
+					cur_entry_buffer[cur_entry_i] = cur_line[i];
+					cur_entry_i++;
+				} // i loop.
+			}
+
+			delete[] cur_line;
+		} // file reading loop.
+
+		fclose(f_fasta);
+		fclose(f_chr_ids);
+		delete[] cur_entry_buffer;
+	} // -preprocess_FASTA option.	
+	else if (t_string::compare_strings(argv[1], "-generate_compressed_pileup_per_SAM"))
 	{
 		if (argc != 7)
 		{
