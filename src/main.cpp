@@ -931,7 +931,7 @@ Options:\n\
 		char* cur_line = NULL;
 		int buff_len = 2000 * 1000 * 1000;
 		char* cur_entry_buffer = new char[buff_len];
-		int cur_entry_i = 0;
+		int cur_entry_i = 1;
 		char cur_entry_id[1000];
 
 		char chr_ids_fp[1000];
