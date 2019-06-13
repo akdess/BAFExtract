@@ -993,7 +993,7 @@ Options:\n\
 
 				// Update the id, reset the counter.
 				strcpy(cur_entry_id, &(cur_line[1]));
-				cur_entry_i = 0;
+				cur_entry_i = 1;
 			}
 			else
 			{
