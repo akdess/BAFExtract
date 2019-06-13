@@ -27,17 +27,40 @@ You can download and unzip genome_fasta_pileup_dir files from :
 [for hg38](https://www.dropbox.com/s/ysrcfcnk7z8gyit/hg38.zip?dl=0)
 
 [for hg19](https://www.dropbox.com/s/a3u8f2f8ufm5wdj/hg19.zip?dl=0)
-	
-You can download genome_list files from : 
 
-[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0)
-	
-[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
-
-To create the preprocessed sequence for other genomes, you can use:
+Or you can create genome_fasta_pileup_dir files for other genomes using the following commands:
 
 ```
-BAFExtract -preprocess_FASTA mm10.fa mm10
+BAFExtract -preprocess_FASTA [FASTA file path] [Output directory]
+```
+
+for example: 
+```
+wget -c http://hgdownload.soe.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz
+tar -xvzf chromFa.tar.gz
+mkdir ../mm10
+FILES=./*fa
+for f in $FILES
+do
+  echo "Processing $f file..."
+  BAFExtract -preprocess_FASTA $f ../mm10
+done
+```
+
+You can download genome_list files from : 
+
+[for hg38](https://www.dropbox.com/s/rq7v67tiou1qwwg/hg38.list?dl=0) 
+
+generated using the following command: 
+```
+fetchChromSizes hg38 > hg38.list
+```
+
+[for hg19](https://www.dropbox.com/s/jcmt23nmuzm6poz/hg19.list?dl=0) 
+
+generated using the following command: 
+```
+fetchChromSizes hg19 > hg19.list
 ```
 
 # Example
@@ -46,3 +69,4 @@ BAFExtract -preprocess_FASTA mm10.fa mm10
 ```{bash} 
 mkdir test; samtools view SRR1295366.sorted.bam | ./bin/BAFExtract -generate_compressed_pileup_per_SAM stdin hg38.list test 50 0; ./bin/BAFExtract -get_SNVs_per_pileup hg38.list test ./hg38/ 20 4 0.1 test.baf
 ```
+Note: In the example above ./BAFExtract -generate_compressed_pileup_per_SAM uses mimunum mapping quality threshold 50.  Depending on the aligner you used the MAPQ-Values can differ a lot and the setting of [Minimum mapping quality] to 50  could mean that no reads are surviving the filtering, only due to the aligners implementation of MAPQ. (acknowledgements to Tobias Tekath)
