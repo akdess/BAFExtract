@@ -67,6 +67,6 @@ fetchChromSizes hg19 > hg19.list
 [download example bam file](https://www.dropbox.com/s/1vl6iip0b8jwu66/SRR1295366.sorted.bam?dl=0)
 
 ```{bash} 
-mkdir test; samtools view SRR1295366.sorted.bam | ./bin/BAFExtract -generate_compressed_pileup_per_SAM stdin hg38.list test 50 0; ./bin/BAFExtract -get_SNVs_per_pileup hg38.list test ./hg38/ 20 4 0.1 test.baf
+mkdir test; samtools view SRR1295366.sorted.bam | ./bin/BAFExtract -generate_compressed_pileup_per_SAM stdin hg38.list test 50 0; ./bin/BAFExtract -get_SNVs_per_pileup hg38.list test ./hg38/ 20 4 0.1 test.snp
 ```
 Note: In the example above ./BAFExtract -generate_compressed_pileup_per_SAM uses mimunum mapping quality threshold 50.  Depending on the aligner you used the MAPQ-Values can differ a lot and the setting of [Minimum mapping quality] to 50  could mean that no reads are surviving the filtering, only due to the aligners implementation of MAPQ. (acknowledgements to Tobias Tekath)
