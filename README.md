@@ -10,7 +10,7 @@ Please open a new "issue" on github or contact authors Akdes.Harmanci@uth.tmc.ed
 
 # Installation
 
-Type make to build BAFExtract. The executable is built under bin directory. The code is tested on various Unix based systems.
+Type make to build BAFExtract. The executable is built under `bin` directory. The code is tested on various Unix based systems.
 
 # Usage 
 
@@ -69,4 +69,4 @@ fetchChromSizes hg19 > hg19.list
 ```{bash} 
 mkdir test; samtools view SRR1295366.sorted.bam | ./bin/BAFExtract -generate_compressed_pileup_per_SAM stdin hg38.list test 50 0; ./bin/BAFExtract -get_SNVs_per_pileup hg38.list test ./hg38/ 20 4 0.1 test.snp
 ```
-Note: In the example above ./BAFExtract -generate_compressed_pileup_per_SAM uses mimunum mapping quality threshold 50.  Depending on the aligner you used the MAPQ-Values can differ a lot and the setting of [Minimum mapping quality] to 50  could mean that no reads are surviving the filtering, only due to the aligners implementation of MAPQ. (acknowledgements to Tobias Tekath)
+Note: In the example above ./BAFExtract -generate_compressed_pileup_per_SAM uses mininum mapping quality threshold 50.  Depending on the aligner you used the MAPQ-Values can differ a lot and the setting of [Minimum mapping quality] to 50  could mean that no reads are surviving the filtering, only due to the aligners implementation of MAPQ. (acknowledgements to Tobias Tekath)
